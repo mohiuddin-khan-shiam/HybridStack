@@ -484,14 +484,14 @@ Copyright 2026 S. M. Mohiuddin Khan Shiam, Meherunnesa Neela, Amrijit Biswas, Ma
 
 | Author | Role |
 |--------|------|
-| **S. M. Mohiuddin Khan Shiam** | Corresponding Author |
+| **S. M. Mohiuddin Khan Shiam** | Author |
 | **Meherunnesa Neela** | Co-Author |
-| **Amrijit Biswas** | Co-Author |
-| **Mahdy Rahman Chowdhury** | Co-Author |
+| **Amrijit Biswas** | Co-supervisor |
+| **Mahdy Rahman Chowdhury** | supervisor |
 
 ### Contact
 
-For questions, feedback, or collaboration inquiries, reach out to the corresponding author:
+For questions, feedback, or collaboration inquiries, reach out to the author:
 
 **S. M. Mohiuddin Khan Shiam**
 
