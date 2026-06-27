@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite our paper."
+title: "HybridStack: Explainable Hybrid Ensemble for Accurate Inflation Forecasting with High-Frequency Macro-Financial Data"
+type: software
+authors:
+  - family-names: Shiam
+    given-names: S. M. Mohiuddin Khan
+    orcid: "https://orcid.org/0009-0005-5504-2595"
+  - family-names: Neela
+    given-names: Meherunnesa
+  - family-names: Biswas
+    given-names: Amrijit
+  - family-names: Chowdhury
+    given-names: Mahdy Rahman
+repository-code: "https://github.com/mohiuddin-khan-shiam/HybridStack"
+license: Apache-2.0
+preferred-citation:
+  type: article
+  title: "HybridStack: Explainable hybrid ensemble for accurate inflation forecasting with high-frequency macro-financial data"
+  authors:
+    - family-names: Shiam
+      given-names: S. M. Mohiuddin Khan
+      orcid: "https://orcid.org/0009-0005-5504-2595"
+    - family-names: Neela
+      given-names: Meherunnesa
+    - family-names: Biswas
+      given-names: Amrijit
+    - family-names: Chowdhury
+      given-names: Mahdy Rahman
+  journal: "Array"
+  volume: 31
+  start: 101003
+  year: 2026
+  issn: "2590-0056"
+  doi: "10.1016/j.array.2026.101003"
+  url: "https://www.sciencedirect.com/science/article/pii/S2590005626003267"
