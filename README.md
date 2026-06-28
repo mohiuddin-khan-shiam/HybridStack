@@ -22,7 +22,7 @@ The framework leverages **Bayesian hyperparameter optimization** via Gaussian Pr
 
 ### Key Highlights
 
-- 🏆 **Near-perfect R² = 0.999994** on 10-Year Breakeven Inflation Rate forecasting
+- 🏆 **Near-perfect R² = 0.9999** on 10-Year Breakeven Inflation Rate forecasting
 - 📊 **9 macroeconomic indicators** from FRED (Federal Reserve Economic Data)
 - 🔬 **16 baseline models** benchmarked across ML and DL paradigms
 - 🧠 **3 XAI methods** (SHAP, LIME, PDP) for model interpretability
@@ -35,35 +35,20 @@ The framework leverages **Bayesian hyperparameter optimization** via Gaussian Pr
 
 HybridStack uses a two-stage stacked generalization architecture:
 
-```
-                        ┌─────────────────────────────────────────┐
-                        │           INPUT FEATURES (15)           │
-                        │  9 macro indicators + 5 lags + rolling  │
-                        └──────────────┬──────────────────────────┘
-                                       │
-                    ┌──────────────────┴──────────────────┐
-                    ▼                                      ▼
-        ┌───────────────────┐                ┌───────────────────┐
-        │   XGBoost (Base)  │                │  Ridge (Base)     │
-        │   Nonlinear       │                │  Linear           │
-        │   Patterns        │                │  Relationships    │
-        └────────┬──────────┘                └────────┬──────────┘
-                 │                                     │
-                 │    Out-of-Fold Predictions           │
-                 └──────────────┬──────────────────────┘
-                                │
-                    ┌───────────▼───────────┐
-                    │   Ridge Meta-Learner  │
-                    │   (Stage 2)           │
-                    │                       │
-                    │  ŷ = γ₁·f_XGB(x)     │
-                    │     + γ₂·f_Ridge(x)  │
-                    └───────────┬───────────┘
-                                │
-                                ▼
-                    ┌───────────────────────┐
-                    │   FINAL PREDICTION    │
-                    └───────────────────────┘
+```mermaid
+flowchart TD
+    A["📥 INPUT FEATURES (15)\n9 macro indicators + 5 lags + rolling mean"]
+    A --> B["🌳 XGBoost\n(Base Learner)\nNonlinear Patterns"]
+    A --> C["📐 Ridge Regression\n(Base Learner)\nLinear Relationships"]
+    B -->|"Out-of-Fold\nPredictions"| D["⚙️ Ridge Meta-Learner\n(Stage 2)\nŷ = γ₁·f_XGB(x) + γ₂·f_Ridge(x)"]
+    C -->|"Out-of-Fold\nPredictions"| D
+    D --> E["📊 FINAL PREDICTION"]
+
+    style A fill:#4A90D9,stroke:#2C5F8A,color:#FFFFFF,stroke-width:2px
+    style B fill:#E8744F,stroke:#C0563A,color:#FFFFFF,stroke-width:2px
+    style C fill:#50B86C,stroke:#3A8A50,color:#FFFFFF,stroke-width:2px
+    style D fill:#9B59B6,stroke:#7D3C98,color:#FFFFFF,stroke-width:2px
+    style E fill:#F5B041,stroke:#D4942E,color:#FFFFFF,stroke-width:2px
 ```
 
 ---
@@ -313,20 +298,28 @@ A two-stage stacked generalization ensemble:
 
 ## 📈 Results
 
-HybridStack achieves **near-perfect prediction accuracy**, significantly outperforming all 15 baseline models:
+HybridStack achieves **near-perfect prediction accuracy**, significantly outperforming all 15 baseline models across all 7 evaluation metrics:
 
-| Model | MSE | RMSE | MAE | MAPE (%) | R² |
-|-------|-----|------|-----|----------|-----|
-| **⭐ HybridStack** | **0.000000** | **0.000452** | **0.000248** | **0.0099** | **0.999994** |
-| Ridge Regression | 0.0001 | 0.0113 | 0.0067 | 0.4288 | 0.9993 |
-| HGBR | 0.0006 | 0.0242 | 0.0148 | 0.9646 | 0.9967 |
-| XGBoost | 0.0006 | 0.0245 | 0.0146 | 0.9443 | 0.9966 |
-| LightGBM | 0.0006 | 0.0251 | 0.0153 | 0.9767 | 0.9964 |
-| CatBoost | 0.0007 | 0.0259 | 0.0169 | 1.0766 | 0.9962 |
-| Extra Trees | 0.0008 | 0.0276 | 0.0152 | 0.9654 | 0.9957 |
-| Random Forest | 0.0008 | 0.0288 | 0.0164 | 1.0480 | 0.9953 |
+| Model | MSE | RMSE | MAE | MAPE (%) | sMAPE (%) | MASE | R² |
+|-------|-----|------|-----|----------|-----------|------|----|  
+| RF | 0.0031 | 0.0557 | 0.0300 | 1.1942 | 1.2109 | 1.6663 | 0.9025 |
+| XGBoost | 0.0006 | 0.0245 | 0.0146 | 0.9443 | 0.9379 | 0.0372 | 0.9966 |
+| LightGBM | 0.0007 | 0.0273 | 0.0169 | 1.2628 | 1.1649 | 0.0429 | 0.9958 |
+| GBR | 0.0006 | 0.0245 | 0.0148 | 0.9403 | 0.9366 | 0.0377 | 0.9966 |
+| ERTR | 0.0007 | 0.0269 | 0.0164 | 1.1514 | 1.0918 | 0.0417 | 0.9959 |
+| HGBR | 0.0006 | 0.0242 | 0.0148 | 0.9646 | 0.9656 | 0.0378 | 0.9967 |
+| CatBoost | 0.0006 | 0.0247 | 0.0151 | 1.1091 | 1.0280 | 0.0385 | 0.9966 |
+| SVR | 0.0012 | 0.0347 | 0.0163 | 1.0985 | 1.0268 | 0.0415 | 0.9932 |
+| Ridge | 0.0001 | 0.0113 | 0.0067 | 0.4288 | 0.4283 | 0.0170 | 0.9993 |
+| Lasso | 0.0010 | 0.0311 | 0.0198 | 1.5007 | 1.3584 | 0.0504 | 0.9945 |
+| ElasticNet | 0.0009 | 0.0293 | 0.0179 | 1.3318 | 1.2061 | 0.0455 | 0.9952 |
+| DTR | 0.0010 | 0.0322 | 0.0205 | 1.3339 | 1.3303 | 0.0521 | 0.9941 |
+| KNN | 0.0009 | 0.0304 | 0.0179 | 1.1511 | 1.1287 | 0.0455 | 0.9948 |
+| BiLSTM | 0.0034 | 0.0580 | 0.0495 | 2.0861 | 2.1146 | 0.4942 | 0.8498 |
+| Bi-GRU | 0.0035 | 0.0588 | 0.0521 | 2.2096 | 2.2401 | 0.4155 | 0.8382 |
+| **⭐ HybridStack** | **4.04e-7** | **0.0006** | **0.0004** | **0.0291** | **0.0291** | **0.0010** | **0.9999** |
 
-> **Key takeaway:** HybridStack's MAPE of **0.0099%** is approximately **43× better** than Ridge Regression alone (0.4288%), demonstrating the power of the stacking ensemble approach.
+> **Key takeaway:** HybridStack's MAPE of **0.0291%** is approximately **15× better** than Ridge Regression alone (0.4288%) and achieves an R² of **0.9999**, demonstrating the power of the stacking ensemble approach.
 
 ---
 
