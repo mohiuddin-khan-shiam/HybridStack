@@ -357,6 +357,44 @@ Three post-hoc interpretability methods provide transparency into model decision
 
 The `eda/` directory contains **32 comprehensive analyses**, each with standalone Python code and documentation:
 
+
+```mermaid
+mindmap
+  root((32 EDA Analyses))
+    Stationarity & Time Series
+      ADF Test
+      ACF & PACF
+      Lag Plots
+      Structural Breaks
+    Distribution Analysis
+      Box Plots
+      Violin Plots
+      Histograms & KDE
+      KDE Analysis
+    Correlation & Relationships
+      Correlation Matrices
+      Cross-Correlation
+      Scatter Plots
+      Pair Plots
+      Network Graphs
+    Trend & Smoothing
+      Moving Averages
+      Exponential Smoothing
+      HP Filter
+      Rolling Windows
+      Variance Bands
+    Decomposition & Clustering
+      Time Series Decomposition
+      PCA
+      Hierarchical Clustering
+      DTW Analysis
+    Economic Analysis
+      Phillips Curve
+      Seasonal Heatmaps
+      Peak & Trough
+      Lead-Lag Analysis
+```
+
 <details>
 <summary><b>Click to expand the full list of EDA analyses</b></summary>
 
