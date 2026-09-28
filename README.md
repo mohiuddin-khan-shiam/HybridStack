@@ -32,6 +32,23 @@ The framework leverages **Bayesian hyperparameter optimization** via Gaussian Pr
 
 ---
 
+## 🌐 Interactive Research Website & Live Playground
+
+Experience the model interactively through our dedicated research web platform hosted on GitHub Pages:
+
+👉 **[https://mohiuddin-khan-shiam.github.io/HybridStack/](https://mohiuddin-khan-shiam.github.io/HybridStack/)**
+
+| Feature | Highlights |
+|---------|------------|
+| 🎮 **Live Forecast Simulator** | Interactive macroeconomic slider playground to test rate hikes, energy price shocks, and historic crisis scenarios (2008, 2020, 2022) with a real-time radial gauge and model weight breakdown. |
+| 📊 **Benchmark Studio** | Interactive, sortable, and filterable evaluation tables comparing all 16 models across 7 regression metrics with side-by-side radar and bar chart visualizations. |
+| 🧠 **XAI Transparency Suite** | High-resolution (600 DPI) publication diagnostics for SHAP (KernelSHAP feature attributions), LIME (local surrogates), and Partial Dependence Plots (PDP) with built-in lightbox zoom. |
+| 🔬 **32-EDA Deep Dive** | Searchable and filterable database of all 32 exploratory data analyses with mathematical formulas, methodology summaries, and empirical plots. |
+| 📁 **Data & Reproducibility Hub** | Interactive code terminal with 1-click clipboard copy for environment setup, full pipeline execution, and FRED dataset provenance. |
+| 📜 **Citation & PDF Access** | Direct access to the published paper PDF and 1-click BibTeX copy with instant toast feedback. |
+
+---
+
 ## 🏗️ Architecture
 
 HybridStack uses a two-stage stacked generalization architecture:
@@ -61,12 +78,17 @@ HybridStack/
 │
 ├── 📄 HybridStack.pdf                  # Published research paper
 ├── 📄 README.md                        # This file
+├── 📄 index.html                       # Interactive web application (GitHub Pages root)
+├── 📄 .nojekyll                        # GitHub Pages deployment configuration
 ├── 📄 LICENSE                          # Apache 2.0 License
 ├── 📄 CITATION.cff                     # Machine-readable citation
 ├── 📄 CONTRIBUTING.md                  # Contribution guidelines
 ├── 📄 CHANGELOG.md                     # Version history
 ├── 📄 requirements.txt                 # Python dependencies
 ├── 📄 .gitignore                       # Git ignore rules
+│
+├── 📂 assets/                          # Website styles, scripts, and 31 journal figures
+├── 📂 docs/                            # Mirrored website (GitHub Pages /docs deployment)
 │
 ├── 📂 notebooks/                       # Main project code
 │   └── HybridStack.ipynb              # Full end-to-end pipeline
@@ -144,7 +166,7 @@ HybridStack/
     │   └── feature_request.md
     ├── PULL_REQUEST_TEMPLATE.md
     └── workflows/
-        └── ci.yml
+        └── deploy-pages.yml            # Automated GitHub Pages CI/CD workflow
 ```
 
 > **Note:** Each subdirectory within `models/`, `eda/`, and `explainability/` contains a Python implementation (`.py`) and a Markdown documentation file (`.md`).
