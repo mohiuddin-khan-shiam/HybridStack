@@ -6,6 +6,7 @@
 
 [![Paper](https://img.shields.io/badge/Paper-Array%20Journal-blue?style=for-the-badge&logo=elsevier)](https://www.sciencedirect.com/science/article/pii/S2590005626003267)
 [![DOI](https://img.shields.io/badge/DOI-10.1016/j.array.2026.101003-green?style=for-the-badge)](https://doi.org/10.1016/j.array.2026.101003)
+[![Website](https://img.shields.io/badge/Website-Interactive%20Platform-10b981?style=for-the-badge&logo=googlechrome&logoColor=white)](https://mohiuddin-khan-shiam.github.io/HybridStack/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-orange?style=for-the-badge)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-yellow?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![Citation](https://img.shields.io/badge/Cite-CITATION.cff-lightgrey?style=for-the-badge)](CITATION.cff)
