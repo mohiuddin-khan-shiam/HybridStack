@@ -44,8 +44,8 @@
 
   <!-- KaTeX for crisp mathematical formulas -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
 
   <!-- Chart.js for interactive evaluation comparisons -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -303,7 +303,7 @@
               <div class="step-number">4</div>
               <div class="step-content">
                 <h4>Stage 2 Ridge Meta-Learner Layer</h4>
-                <p>Optimized linear combination weighting base predictions: &ycirc; = &gamma;&lowast;&sub1; f<sub>XGB</sub>(x) + &gamma;&lowast;&sub2; f<sub>Ridge</sub>(x).</p>
+                <p>Optimized linear combination: <span class="latex-inline">\(\hat{y} = \gamma_1^* f_{\text{XGB}}(x) + \gamma_2^* f_{\text{Ridge}}(x)\)</span></p>
               </div>
             </div>
 
@@ -329,7 +329,7 @@
             <div class="formula-box">
               <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">Mathematical Formulation</div>
               <div id="pipeline-detail-formula">
-                \mathbf{X}_t = \left[ \mathbf{m}_t, \, y_{t-1}, \dots, y_{t-5}, \, \mu_{7d}(y_t) \right] \in \mathbb{R}^{15}
+                $$\mathbf{X}_t = \left[ \mathbf{m}_t, \, y_{t-1}, \dots, y_{t-5}, \, \mu_{7d}(y_t) \right] \in \mathbb{R}^{15}$$
               </div>
             </div>
 
@@ -610,10 +610,10 @@
             <span class="badge-tag badge-success">Global & Local Attribution</span>
             <h3 style="font-size: 1.35rem; color: var(--text-heading); margin: 12px 0;">Shapley Additive exPlanations (SHAP)</h3>
             <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;">
-              KernelSHAP allocates exact payout attributions derived from cooperative game theory. It decomposes each individual forecast into additive contributions across all $2^{|F|}$ feature coalitions.
+              KernelSHAP allocates exact payout attributions derived from cooperative game theory. It decomposes each individual forecast into additive contributions across all \(2^{|F|}\) feature coalitions.
             </p>
             <div class="formula-box">
-              \phi_i = \sum_{S \subseteq F \setminus \{i\}} \frac{|S|!(|F| - |S| - 1)!}{|F|!} \left[ f(S \cup \{i\}) - f(S) \right]
+              $$\phi_i = \sum_{S \subseteq F \setminus \{i\}} \frac{|S|!(|F| - |S| - 1)!}{|F|!} \left[ f(S \cup \{i\}) - f(S) \right]$$
             </div>
             <div class="xai-key-finding">
               <strong>Key Finding:</strong> In the second stage, Ridge linear OOF predictions provide the stable anchor point, while XGBoost non-linear predictions supply corrective offsets during rapid regime shocks.
@@ -634,7 +634,7 @@
               LIME approximates complex global model behavior locally by sampling perturbations around a specific test instance and fitting a sparse, interpretable linear surrogate.
             </p>
             <div class="formula-box">
-              \xi(x) = \arg\min_{g \in G} \mathcal{L}(f, g, \pi_x) + \Omega(g)
+              $$\xi(x) = \arg\min_{g \in \mathcal{G}} \mathcal{L}(f, g, \pi_x) + \Omega(g)$$
             </div>
             <div class="xai-key-finding">
               <strong>Key Finding:</strong> Local explanations confirm that during extreme macro stress (such as oil shocks > $100/bbl), the local surrogate shifts weight towards XGBoost's nonlinear boundary.
@@ -655,7 +655,7 @@
               Partial Dependence plots illustrate the marginal effect of individual meta-features on the predicted breakeven inflation rate, averaging out the effects of all other features.
             </p>
             <div class="formula-box">
-              \hat{f}_S(x_S) = \frac{1}{n} \sum_{i=1}^n \hat{f}(x_S, x_{C}^{(i)})
+              $$\hat{f}_S(x_S) = \frac{1}{n} \sum_{i=1}^n \hat{f}(x_S, x_{C}^{(i)})$$
             </div>
             <div class="xai-key-finding">
               <strong>Key Finding:</strong> The PDP reveals monotonic, highly smooth linear tracking with bounded slopes, verifying that the meta-learner avoids spurious oscillations.

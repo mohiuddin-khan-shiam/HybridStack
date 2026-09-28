@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initEDAGrid();
   initModalsAndLightboxes();
   initClipboardHelpers();
+  setupKaTeX();
 });
 
 /* ==========================================================================
@@ -283,6 +284,92 @@ const PIPELINE_DETAILS = {
   }
 };
 
+/* ==========================================================================
+   Mathematical Rendering Helpers (KaTeX)
+   ========================================================================== */
+function renderMath(element, texString, isDisplay = true) {
+  if (!element || !texString) return;
+
+  // Strip wrapping delimiters if present
+  let clean = texString.trim();
+  if (clean.startsWith("$$") && clean.endsWith("$$")) {
+    clean = clean.slice(2, -2).trim();
+  } else if (clean.startsWith("\\[") && clean.endsWith("\\]")) {
+    clean = clean.slice(2, -2).trim();
+  } else if (clean.startsWith("\\(") && clean.endsWith("\\)")) {
+    clean = clean.slice(2, -2).trim();
+  } else if (clean.startsWith("$") && clean.endsWith("$")) {
+    clean = clean.slice(1, -1).trim();
+  }
+
+  if (window.katex) {
+    try {
+      window.katex.render(clean, element, {
+        displayMode: isDisplay,
+        throwOnError: false
+      });
+      return;
+    } catch (e) {
+      console.warn("KaTeX direct render error:", e);
+    }
+  }
+
+  // Fallback: set delimiter text and trigger auto-render
+  element.textContent = isDisplay ? `$$${clean}$$` : `\\(${clean}\\)`;
+  if (window.renderMathInElement) {
+    try {
+      window.renderMathInElement(element, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false
+      });
+    } catch (err) {
+      console.warn("KaTeX auto-render error:", err);
+    }
+  }
+}
+
+function renderAllMath(root = document.body) {
+  if (!root) return;
+  if (window.renderMathInElement) {
+    try {
+      window.renderMathInElement(root, {
+        delimiters: [
+          { left: '$$', right: '$$', display: true },
+          { left: '\\[', right: '\\]', display: true },
+          { left: '$', right: '$', display: false },
+          { left: '\\(', right: '\\)', display: false }
+        ],
+        throwOnError: false,
+        errorColor: '#f43f5e',
+        ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      });
+    } catch (err) {
+      console.warn("KaTeX auto-render error:", err);
+    }
+  }
+}
+
+function setupKaTeX() {
+  function tryRender(attempts = 0) {
+    if (window.katex) {
+      renderAllMath(document.body);
+      const formulaEl = document.getElementById("pipeline-detail-formula");
+      if (formulaEl && PIPELINE_DETAILS.step1) {
+        renderMath(formulaEl, PIPELINE_DETAILS.step1.formula, true);
+      }
+    } else if (attempts < 30) {
+      setTimeout(() => tryRender(attempts + 1), 100);
+    }
+  }
+  tryRender();
+  window.addEventListener("load", () => renderAllMath(document.body));
+}
+
 function initPipelineWalkthrough() {
   const stepCards = document.querySelectorAll(".step-card");
   const titleEl = document.getElementById("pipeline-detail-title");
@@ -291,6 +378,11 @@ function initPipelineWalkthrough() {
   const rationaleEl = document.getElementById("pipeline-detail-rationale");
 
   if (!stepCards.length || !titleEl) return;
+
+  // Immediately render Step 1 formula on load
+  if (formulaEl && PIPELINE_DETAILS.step1) {
+    renderMath(formulaEl, PIPELINE_DETAILS.step1.formula, true);
+  }
 
   stepCards.forEach((card) => {
     card.addEventListener("click", () => {
@@ -302,12 +394,8 @@ function initPipelineWalkthrough() {
       if (info) {
         titleEl.textContent = info.title;
         descEl.textContent = info.description;
-        formulaEl.textContent = info.formula;
+        renderMath(formulaEl, info.formula, true);
         rationaleEl.textContent = info.rationale;
-
-        if (window.renderMathInElement) {
-          window.renderMathInElement(document.getElementById("pipeline-display-panel"));
-        }
       }
     });
   });
@@ -722,9 +810,7 @@ window.openEDAModal = function (edaId) {
   `;
 
   modalBackdrop.classList.add("open");
-  if (window.renderMathInElement) {
-    window.renderMathInElement(modalBody);
-  }
+  renderAllMath(modalBody);
 };
 
 /* ==========================================================================
